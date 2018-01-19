@@ -13,15 +13,15 @@ import (
 func init()  {
 	flag.String("dbtype", "","database type")
 	flag.String("dbpath", "","open database path")
-	flag.String("cachetype", "","cache type")
 	flag.String("cachepath", "","open cache path")
+	flag.String("cachepwd", "","cache password")
 }
 
 // Config 系统配置项
 type Config struct {
 	DBType    string `json:"dbtype"`
 	DBPath    string `json:"dbpath"`
-	CacheType string `json:"cachetype"`
+	CachePwd string `json:"cachepwd"`
 	CachePath string `json:"cachepath"`
 }
 
