@@ -19,7 +19,7 @@ func (r *Router) Init() {
 	r.isInit = true
 	r.r.Handle("/{shroturl}", nil).Methods(http.MethodGet)
 	r.r.Handle("/", nil).Methods(http.MethodPost)
-	
+	http.Handle("r",r.r)
 }
 
 // Run listern http
