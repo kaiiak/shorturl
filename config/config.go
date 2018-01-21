@@ -10,18 +10,18 @@ import (
 	"strconv"
 )
 
-func init()  {
-	flag.String("dbtype", "","database type")
-	flag.String("dbpath", "","open database path")
-	flag.String("cachepath", "","open cache path")
-	flag.String("cachepwd", "","cache password")
+func init() {
+	flag.String("dbtype", "", "database type")
+	flag.String("dbpath", "", "open database path")
+	flag.String("cachepath", "", "open cache path")
+	flag.String("cachepwd", "", "cache password")
 }
 
 // Config 系统配置项
 type Config struct {
 	DBType    string `json:"dbtype"`
 	DBPath    string `json:"dbpath"`
-	CachePwd string `json:"cachepwd"`
+	CachePwd  string `json:"cachepwd"`
 	CachePath string `json:"cachepath"`
 }
 
