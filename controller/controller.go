@@ -12,6 +12,11 @@ type Controller struct {
 	data *data.Data
 }
 
+// New new controller
+func New(d *data.Data) *Controller {
+	return &Controller{d}
+}
+
 // GetRawURL 获取原始url
 func (c *Controller) GetRawURL() http.Handler {
 	return http.HandlerFunc(
@@ -26,7 +31,7 @@ func (c *Controller) GetRawURL() http.Handler {
 				rw.WriteHeader(http.StatusInternalServerError)
 				return
 			}
-			http.Redirect(rw,r, rurl, http.StatusMovedPermanently)
+			http.Redirect(rw, r, rurl, http.StatusMovedPermanently)
 			return
 		})
 }

@@ -44,3 +44,8 @@ func (d *ShortURLDB) Set(key, value string) (int64, error) {
 	}
 	return um.ID, nil
 }
+
+// CLose close database
+func (d *ShortURLDB) CLose() error {
+	return d.DB.Close()
+}

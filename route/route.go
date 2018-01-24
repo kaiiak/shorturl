@@ -14,18 +14,32 @@ type Router struct {
 	isInit bool
 }
 
+// New new router
+func New(c *controller.Controller) *Router {
+	return &Router{
+		r:      mux.NewRouter(),
+		c:      c,
+		isInit: false,
+	}
+}
+
 // Init 注册路由
 func (r *Router) Init() {
-	r.isInit = true
-	r.r.Handle("/{shroturl}", nil).Methods(http.MethodGet)
-	r.r.Handle("/", nil).Methods(http.MethodPost)
-	http.Handle("r",r.r)
+	if !r.isInit {
+		r.isInit = true
+		r.r.Handle("/{shroturl}", nil).Methods(http.MethodGet)
+		r.r.Handle("/", nil).Methods(http.MethodPost)
+		http.Handle("r", r.r)
+	}
 }
 
 // Run listern http
 func (r *Router) Run() error {
 	if !r.isInit {
-		return ErrRouterUninitialized
+		r.Init()
+	}
+	if err := http.ListenAndServe("", nil); err != nil && err != http.ErrServerClosed {
+		return err
 	}
 	return nil
 }
