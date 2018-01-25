@@ -44,11 +44,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode
 
 # Windows thumbnail cache files
 Thumbs.db
