@@ -15,6 +15,7 @@ func init() {
 	flag.String("dbpath", "", "open database path")
 	flag.String("cachepath", "", "open cache path")
 	flag.String("cachepwd", "", "cache password")
+	flag.Int("port", 80, "listen port, default 80")
 }
 
 // Config 系统配置项
@@ -23,6 +24,7 @@ type Config struct {
 	DBPath    string `json:"dbpath"`
 	CachePwd  string `json:"cachepwd"`
 	CachePath string `json:"cachepath"`
+	Port      int    `json:"port"`
 }
 
 // New 读取系统配置

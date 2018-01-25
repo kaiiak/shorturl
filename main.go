@@ -22,7 +22,7 @@ func main() {
 		panic(err)
 	}
 	c := controller.New(d)
-	r := route.New(c)
+	r := route.New(c, cnf)
 
 	r.Init()
 	if err = r.Run(); err != nil {
