@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 
 	"github.com/kaiiak/shorturl/config"
 	"github.com/kaiiak/shorturl/controller"
@@ -15,17 +16,17 @@ func main() {
 	flag.Parse()
 	cnf, err := config.New(configpath)
 	if err != nil {
-		panic(err)
+		panic(fmt.Sprintf("new config error:%s", err))
 	}
 	d, err := data.New(cnf)
 	if err != nil {
-		panic(err)
+		panic(fmt.Sprintf("new data error:%s", err))
 	}
 	c := controller.New(d)
 	r := route.New(c, cnf)
 
 	r.Init()
 	if err = r.Run(); err != nil {
-		panic(err)
+		panic(fmt.Sprintf("run router error:%s", err))
 	}
 }
