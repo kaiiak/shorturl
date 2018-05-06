@@ -4,7 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/kaiiak/shorturl/models"
 
-	// 现在只支持 mysq, postgresql, sqlite
+	// 现在只支持 mysql, postgresql, sqlite
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
