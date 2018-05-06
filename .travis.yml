@@ -1,0 +1,15 @@
+language: go
+
+go: 
+ - 1.8
+ - 1.9
+ - 1.10
+ - tip
+
+
+jobs:
+  include:
+    - stage: test
+      script: go test $(go list ./... | grep -v /vendor/) -cover -tags test -race
+    - stage: build
+      script: go build -o shorturl.o
