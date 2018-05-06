@@ -2,17 +2,16 @@ package route
 
 import (
 	"fmt"
-	"net/http"
 
-	"github.com/gorilla/mux"
 	"github.com/kaiiak/shorturl/config"
 	"github.com/kaiiak/shorturl/controller"
+	"github.com/labstack/echo"
 )
 
 // Router 路由
 type Router struct {
 	port   int
-	r      *mux.Router
+	r      *echo.Echo
 	c      *controller.Controller
 	isInit bool
 }
@@ -21,7 +20,7 @@ type Router struct {
 func New(c *controller.Controller, cnf *config.Config) *Router {
 	return &Router{
 		port:   cnf.Port,
-		r:      mux.NewRouter(),
+		r:      echo.New(),
 		c:      c,
 		isInit: false,
 	}
@@ -31,9 +30,8 @@ func New(c *controller.Controller, cnf *config.Config) *Router {
 func (r *Router) Init() {
 	if !r.isInit {
 		r.isInit = true
-		r.r.Handle("/{shroturl}", nil).Methods(http.MethodGet)
-		r.r.Handle("/", nil).Methods(http.MethodPost)
-		http.Handle("r", r.r)
+		r.r.POST("/", nil)
+		r.r.GET("/:shroturl", r.c.GetRawURL)
 	}
 }
 
@@ -42,8 +40,5 @@ func (r *Router) Run() error {
 	if !r.isInit {
 		r.Init()
 	}
-	if err := http.ListenAndServe(fmt.Sprintf(":%d", r.port), nil); err != nil && err != http.ErrServerClosed {
-		return err
-	}
-	return nil
+	return r.r.Start(fmt.Sprintf(":%d", r.port))
 }

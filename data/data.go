@@ -1,6 +1,7 @@
 package data
 
 import (
+	"github.com/jinzhu/gorm"
 	"github.com/kaiiak/shorturl/config"
 	"github.com/kaiiak/shorturl/data/cache"
 	"github.com/kaiiak/shorturl/data/db"
@@ -35,7 +36,7 @@ func (d *Data) Get(shorturlStr string) (string, error) {
 	if err == nil {
 		return v, nil
 	}
-	if err == db.ErrNotExist {
+	if err == db.ErrNotExist || err == gorm.ErrRecordNotFound {
 		return "", ErrNotFound
 	}
 	return "", err

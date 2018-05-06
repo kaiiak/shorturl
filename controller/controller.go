@@ -1,10 +1,11 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	"github.com/kaiiak/shorturl/data"
+	"github.com/labstack/echo"
 )
 
 // Controller c in mvc
@@ -18,20 +19,21 @@ func New(d *data.Data) *Controller {
 }
 
 // GetRawURL 获取原始url
-func (c *Controller) GetRawURL() http.Handler {
-	return http.HandlerFunc(
-		func(rw http.ResponseWriter, r *http.Request) {
-			surl := mux.Vars(r)["shroturl"]
-			rurl, err := c.data.Get(surl)
-			if err != nil {
-				if err == data.ErrNotFound {
-					rw.WriteHeader(http.StatusNotFound)
-					return
-				}
-				rw.WriteHeader(http.StatusInternalServerError)
-				return
-			}
-			http.Redirect(rw, r, rurl, http.StatusMovedPermanently)
-			return
-		})
+func (c *Controller) GetRawURL(ctx echo.Context) error {
+	surl := ctx.Param("shorturl")
+	rurl, err := c.data.Get(surl)
+	if err != nil {
+		if err == data.ErrNotFound {
+			return echo.NewHTTPError(http.StatusNotFound, err)
+		}
+		log.Printf("get [%s], error [%s]", surl, err)
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+	// http.Redirect(rw, r, rurl, http.StatusMovedPermanently)
+	ctx.Redirect(http.StatusMovedPermanently, rurl)
+	return nil
 }
+
+// func (c *Controller) SetRawURL() http.Handler {
+// 	return http.hf
+// }
