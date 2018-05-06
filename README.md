@@ -4,7 +4,7 @@ Shortlinks implemented using golang
 
 
 [![Build Status](https://api.travis-ci.org/kaiiak/shorturl.svg?branch=master)](https://travis-ci.org/kaiiak/shorturl) 
-[![GoDoc](https://godoc.org/github.com/kaiiak/shorturl?status.svg)](https://godoc.org/github.com/kaiiak/goproxy)
+[![GoDoc](https://godoc.org/github.com/kaiiak/shorturl?status.svg)](https://godoc.org/github.com/kaiiak/shorturl)
 [![GoReport](https://goreportcard.com/badge/github.com/kaiiak/shorturl)](https://goreportcard.com/report/github.com/kaiiak/shorturl)
 
 ## CLI
