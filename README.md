@@ -9,7 +9,7 @@ Shortlinks implemented using golang
 
 ## CLI
 * dbtype
-    - only support `mysql`, `postgresql`, `sqlite`
+    - only support `mysql`, `postgresql`, `sqlite`
 * dbpath
     - your database DSN
 * cachepath
