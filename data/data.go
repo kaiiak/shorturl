@@ -29,8 +29,10 @@ func New(cnf *config.Config) (*Data, error) {
 // Get 获取数据
 func (d *Data) Get(shorturlStr string) (string, error) {
 	v, err := d.cache.Get(shorturlStr)
-	if err == nil {
-		return v, nil
+	if err != nil {
+		if err != db.ErrNotExist {
+			return "", err
+		}
 	}
 	v, err = d.db.Get(shorturlStr)
 	if err == nil {

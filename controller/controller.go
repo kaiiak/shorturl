@@ -18,7 +18,7 @@ func New(d *data.Data) *Controller {
 	return &Controller{d}
 }
 
-// GetRawURL 获取原始url
+// GetRawURL return raw url where shorturl
 func (c *Controller) GetRawURL(ctx echo.Context) error {
 	surl := ctx.Param("shorturl")
 	rurl, err := c.data.Get(surl)
@@ -29,11 +29,11 @@ func (c *Controller) GetRawURL(ctx echo.Context) error {
 		log.Printf("get [%s], error [%s]", surl, err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
-	// http.Redirect(rw, r, rurl, http.StatusMovedPermanently)
 	ctx.Redirect(http.StatusMovedPermanently, rurl)
 	return nil
 }
 
-// func (c *Controller) SetRawURL() http.Handler {
-// 	return http.hf
-// }
+// SetRawURL rend short and save to database
+func (c *Controller) SetRawURL(ctx echo.Context) error {
+	return nil
+}
