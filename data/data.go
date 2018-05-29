@@ -5,6 +5,7 @@ import (
 	"github.com/kaiiak/shorturl/config"
 	"github.com/kaiiak/shorturl/data/cache"
 	"github.com/kaiiak/shorturl/data/db"
+	"go.uber.org/zap"
 )
 
 // Data 数据管理
@@ -41,6 +42,11 @@ func (d *Data) Get(shorturlStr string) (string, error) {
 		}
 		return "", err
 	}
+	go func() {
+		if er := d.cache.Set(shorturlStr, v); er != nil {
+			zap.S().Errorf("cache set: [%s], error: [%s]", shorturlStr, err)
+		}
+	}()
 	return v, nil
 }
 
