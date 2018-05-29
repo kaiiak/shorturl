@@ -25,16 +25,23 @@ func (c *Cache) Close() error {
 	return c.client.Close()
 }
 
+func wrappedKey(key string) string {
+	return "short_url_key:" + key
+}
+
 // Get 从缓存中读取
 func (c *Cache) Get(key string) (string, error) {
-	value := c.client.Get(key)
-	if value.Err() == redis.Nil {
-		return "", ErrNotExist
+	value, err := c.client.Get(wrappedKey(key)).Result()
+	if err != nil {
+		if err == redis.Nil {
+			return "", ErrNotExist
+		}
+		return "", err
 	}
-	return value.String(), nil
+	return value, nil
 }
 
 // Set 写入
 func (c *Cache) Set(key, vaule string) error {
-	return c.client.Set(key, vaule, 0).Err()
+	return c.client.Set(wrappedKey(key), vaule, 0).Err()
 }

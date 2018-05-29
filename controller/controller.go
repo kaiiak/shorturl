@@ -35,5 +35,18 @@ func (c *Controller) GetRawURL(ctx echo.Context) error {
 
 // SetRawURL rend short and save to database
 func (c *Controller) SetRawURL(ctx echo.Context) error {
-	return nil
+	var raw struct {
+		RawURL string `json:"raw_url"`
+	}
+	ctx.Bind(&raw)
+	if raw.RawURL == "" {
+		return echo.NewHTTPError(http.StatusBadRequest, "")
+	}
+	value, err := c.data.Set(raw.RawURL)
+	if err != nil {
+		return err
+	}
+	return ctx.JSON(http.StatusOK, map[string]string{
+		"short_url": value,
+	})
 }

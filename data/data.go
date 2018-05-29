@@ -30,23 +30,27 @@ func New(cnf *config.Config) (*Data, error) {
 func (d *Data) Get(shorturlStr string) (string, error) {
 	v, err := d.cache.Get(shorturlStr)
 	if err != nil {
-		if err != db.ErrNotExist {
+		if err != cache.ErrNotExist {
 			return "", err
 		}
 	}
 	v, err = d.db.Get(shorturlStr)
-	if err == nil {
-		return v, nil
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return "", ErrNotFound
+		}
+		return "", err
 	}
-	if err == db.ErrNotExist || err == gorm.ErrRecordNotFound {
-		return "", ErrNotFound
-	}
-	return "", err
+	return v, nil
 }
 
 // Set 设置,如果已存在则返回原始的
 func (d *Data) Set(raw string) (string, error) {
-	return "", nil
+	um, err := d.db.Set(raw)
+	if err != nil {
+		return "", err
+	}
+	return um.ShortURL, nil
 }
 
 // Close 安全的关闭

@@ -1,6 +1,8 @@
 package db
 
 import (
+	"time"
+
 	"github.com/jinzhu/gorm"
 	"github.com/kaiiak/shorturl/models"
 
@@ -30,19 +32,19 @@ func New(typeStr, pathStr string) (*ShortURLDB, error) {
 // Get 获取
 func (d *ShortURLDB) Get(key string) (string, error) {
 	um := &models.URLMap{ShortURL: key}
-	if err := d.DB.Find(um).Error; err != nil {
+	if err := d.DB.First(um).Error; err != nil {
 		return "", err
 	}
 	return um.RawURL, nil
 }
 
 // Set 设置
-func (d *ShortURLDB) Set(key, value string) (int64, error) {
-	um := &models.URLMap{RawURL: key, ShortURL: value}
+func (d *ShortURLDB) Set(key string) (*models.URLMap, error) {
+	um := &models.URLMap{RawURL: key, CreateAt: time.Now()}
 	if err := d.DB.FirstOrCreate(um).Error; err != nil {
-		return 0, err
+		return nil, err
 	}
-	return um.ID, nil
+	return um, nil
 }
 
 // CLose close database
