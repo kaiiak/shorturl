@@ -32,7 +32,7 @@ func New(typeStr, pathStr string) (*ShortURLDB, error) {
 // Get 获取
 func (d *ShortURLDB) Get(key string) (string, error) {
 	um := &models.URLMap{ShortURL: key}
-	if err := d.DB.First(um).Error; err != nil {
+	if err := d.DB.Where(um).First(um).Error; err != nil {
 		return "", err
 	}
 	return um.RawURL, nil

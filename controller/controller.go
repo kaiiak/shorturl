@@ -5,7 +5,6 @@ import (
 
 	"github.com/kaiiak/shorturl/data"
 	"github.com/labstack/echo"
-	"go.uber.org/zap"
 )
 
 // Controller c in mvc
@@ -26,7 +25,7 @@ func (c *Controller) GetRawURL(ctx echo.Context) error {
 		if err == data.ErrNotFound {
 			return echo.NewHTTPError(http.StatusNotFound, err)
 		}
-		zap.S().Errorf("get [%s], error [%s]", surl, err)
+		// zap.S().Errorf("get [%s], error [%s]", surl, err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 	ctx.Redirect(http.StatusMovedPermanently, rurl)
