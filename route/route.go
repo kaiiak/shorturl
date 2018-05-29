@@ -31,7 +31,7 @@ func (r *Router) Init() {
 	if !r.isInit {
 		r.isInit = true
 		r.r.POST("/", r.c.SetRawURL)
-		r.r.GET("/:shroturl", r.c.GetRawURL)
+		r.r.GET("/:shorturl", r.c.GetRawURL)
 	}
 }
 
