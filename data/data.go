@@ -1,8 +1,6 @@
 package data
 
 import (
-	"fmt"
-
 	"github.com/jinzhu/gorm"
 	"github.com/kaiiak/shorturl/config"
 	"github.com/kaiiak/shorturl/data/cache"
@@ -36,11 +34,9 @@ func (d *Data) Get(shorturlStr string) (string, error) {
 			return "", err
 		}
 	}
-	fmt.Println(111, v)
 	if v != "" {
 		return v, nil
 	}
-	fmt.Println(222, v)
 	v, err = d.db.Get(shorturlStr)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -48,7 +44,6 @@ func (d *Data) Get(shorturlStr string) (string, error) {
 		}
 		return "", err
 	}
-	fmt.Println(333, v)
 	go func() {
 		if er := d.cache.Set(shorturlStr, v); er != nil {
 			// zap.S().Errorf("cache set: [%s], error: [%s]", shorturlStr, err)
