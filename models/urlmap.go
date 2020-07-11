@@ -17,7 +17,6 @@ type URLMap struct {
 
 // AfterCreate gorm hook
 func (u *URLMap) AfterCreate(scope *gorm.Scope) (err error) {
-	shortURL := util.ConvertTo62(u.ID+10000)
-	u.ShortURL = shortURL
-	return scope.DB().Model(u).Update("short_url", shortURL).Error
+	u.ShortURL = util.ConvertTo62(u.ID + 10000)
+	return scope.DB().Model(u).Update("short_url", u.ShortURL).Error
 }

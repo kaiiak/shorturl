@@ -1,15 +1,20 @@
 language: go
 
-go: 
- - "1.8"
- - "1.9"
- - "1.10"
- - tip
-
+go:
+  - "1.8"
+  - "1.9"
+  - "1.10"
+  - "1.11"
+  - "1.12"
+  - "1.13"
+  - "1.14"
+  - tip
 
 jobs:
   include:
     - stage: test
-      script: go test $(go list ./... | grep -v /vendor/) -cover -tags test -race
+      script: go test -cover -tags test -race -timeout 30s ./...
+    - stage: vet
+      script: go vet ./...
     - stage: build
       script: go build -o shorturl.o
