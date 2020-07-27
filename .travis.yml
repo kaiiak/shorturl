@@ -10,6 +10,9 @@ go:
   - "1.14"
   - tip
 
+env:
+  - GO111MODULE=on
+
 jobs:
   include:
     - stage: test
