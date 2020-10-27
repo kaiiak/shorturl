@@ -11,9 +11,9 @@ import (
 )
 
 func init() {
-	flag.String("dbtype", "mysql", "database type")
-	flag.String("dbpath", "", "open database path")
-	flag.String("cachepath", "", "open cache path")
+	flag.String("dbtype", "mysql", "default mysql")
+	flag.String("dbpath", "", "database dsn")
+	flag.String("cachepath", "", "redis dsn")
 	flag.String("cachepwd", "", "cache password")
 	flag.Int("port", 80, "listen port, default 80")
 }
